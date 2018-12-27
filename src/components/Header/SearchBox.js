@@ -1,12 +1,13 @@
 import React from 'react'
-import PropTypes from 'prop-types'
-
+import { SearchContext } from '../contexts/SearchContext';
+// import PropTypes from 'prop-types'
 export default class SearchBox extends React.Component {
   
-  static propTypes = {
-    doSearch: PropTypes.func.isRequired,
-    onSearchChange: PropTypes.func.isRequired,
-  }
+  // static propTypes = {
+  //   doSearch: PropTypes.func.isRequired,
+  //   onSearchChange: PropTypes.func.isRequired,
+  // }
+  static contextType = SearchContext;
 
   constructor(props) {
     super(props)
@@ -15,19 +16,19 @@ export default class SearchBox extends React.Component {
 
   onKeyDown(e) {
     if (e.key === 'Enter') {
-      const { doSearch } = this.props
+      const { doSearch } = this.context
       doSearch(e)
     }
   }
 
   render() {
     return (
-      <form onSubmit={this.props.doSearch}>
+      <form onSubmit={this.context.doSearch}>
         <input
           className="input"
           type="text"
           placeholder="Search for a show"
-          onChange={this.props.onSearchChange}
+          onChange={this.context.onSearchChange}
           onKeyDown={this.onKeyDown}
         />
         <input type="submit" value="SEARCH" />

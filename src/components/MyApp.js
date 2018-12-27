@@ -1,15 +1,17 @@
 import React from 'react'
 import List from './List/List'
 import Header from './Header/Header'
+import { SearchContext } from './contexts/SearchContext'
 
 class MyApp extends React.Component {
   constructor(props){
     super(props)
-    this.doSearch = this.doSearch.bind(this)
-    this.onSearchChange = this.onSearchChange.bind(this)
+    this.onSearchChange = 
     this.state = {
       shows: [],
       searchTerm: '',
+      doSearch: this.doSearch.bind(this),
+      onSearchChange: this.onSearchChange.bind(this),
     }
   }
 
@@ -29,8 +31,6 @@ class MyApp extends React.Component {
   doSearch(e) {
     if (e) { e.preventDefault() }
     const { searchTerm } = this.state
-    console.log('this.state', this.state)
-    console.log('searchTerm', searchTerm)
     fetch(
       `http://api.tvmaze.com/search/shows?q=${encodeURI(searchTerm)}`,
       {mode: 'cors'}
@@ -44,11 +44,13 @@ class MyApp extends React.Component {
   render () {
     return (
       <div>
-        <Header doSearch={this.doSearch} onSearchChange={this.onSearchChange}/>
+        <SearchContext.Provider value={this.state}>
+          <Header/>
+        </SearchContext.Provider>
         {this.state.shows.length && <List shows={ this.state.shows }/>}
         {
           !this.state.shows.length && 
-          <div style={{display: 'flex', justifyContent: 'center', marginTop:'50px' }}> Nothing yet</div>
+          <div style={{display: 'flex', justifyContent: 'center', marginTop:'50px' }}>Nothing yet</div>
         }
       </div>
     )
