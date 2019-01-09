@@ -1,7 +1,7 @@
 {
   "name": "react-basic-workshop",
   "version": "1.0.0",
-  "description": "This is a basic react boilerplate for my react workshops and courses. Please note I'm using ^ on the packages as it is only a boilerplate",
+  "description": "This is a basic react workshop. each branch represent the beginning of the next stage",
   "main": "index.js",
   "scripts": {
     "start": "webpack-dev-server --config ./webpack.config.js --mode development",
